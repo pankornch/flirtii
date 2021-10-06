@@ -18,7 +18,7 @@ const User: Model<IUser> = model(
 				type: String,
 				required: true,
 			},
-			lasttName: {
+			lastName: {
 				type: String,
 				required: true
 			},
