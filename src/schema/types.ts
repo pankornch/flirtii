@@ -6,6 +6,8 @@ const types = gql`
 	type User {
 		_id: String!
 		username: String!
+		firstName: String!
+		lastName: String!
 		avatar: String
 		images: [String]!
 		gender: String!

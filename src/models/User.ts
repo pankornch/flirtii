@@ -14,6 +14,14 @@ const User: Model<IUser> = model(
 				type: String,
 				required: true,
 			},
+			firstName: {
+				type: String,
+				required: true,
+			},
+			lasttName: {
+				type: String,
+				required: true
+			},
 			avatar: {
 				type: String,
 			},

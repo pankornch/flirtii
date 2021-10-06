@@ -10,6 +10,8 @@ const input = gql`
         username: String!
         password: String!
         confirmPassword: String!
+        firstName: String!
+        lastName: String!
     }
 `
 
