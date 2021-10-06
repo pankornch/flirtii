@@ -22,6 +22,9 @@ const User: Model<IUser> = model(
 				type: String,
 				required: true
 			},
+			nickname: {
+				type: String,
+			},
 			avatar: {
 				type: String,
 			},

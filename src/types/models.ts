@@ -3,6 +3,7 @@ export interface IUser {
 	username?: string
 	firstName?: string
 	lastName?: string
+	nickname?: string
 	password?: string
 	avatar?: string
 	images?: string[]

@@ -9,6 +9,7 @@ const types = gql`
 		username: String!
 		firstName: String!
 		lastName: String!
+		nickname: String
 		avatar: String
 		images: [String]!
 		gender: String!
