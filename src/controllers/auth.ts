@@ -8,6 +8,8 @@ interface ISignUpInput {
 	username: string
 	password: string
 	confirmPassword: string
+	firstName: string
+	lastName: string
 }
 interface ISignInInput {
 	username: string
@@ -25,6 +27,8 @@ export const signUp: Resolver = async (
 	const data = {
 		username: input.username,
 		password: bcrypt.hashSync(input.password),
+		firstName: input.firstName,
+		lastName: input.lastName,
 	}
 
 	const user = await User.create(data)
