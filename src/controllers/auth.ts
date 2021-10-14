@@ -5,14 +5,14 @@ import { AuthenticationError, UserInputError } from "apollo-server-errors"
 import bcrypt from "bcryptjs"
 
 interface ISignUpInput {
-	username: string
+	email: string
 	password: string
 	confirmPassword: string
 	firstName: string
 	lastName: string
 }
 interface ISignInInput {
-	username: string
+	email: string
 	password: string
 }
 
@@ -25,7 +25,7 @@ export const signUp: Resolver = async (
 	}
 
 	const data = {
-		username: input.username,
+		email: input.email,
 		password: bcrypt.hashSync(input.password),
 		firstName: input.firstName,
 		lastName: input.lastName,
@@ -40,16 +40,16 @@ export const signUp: Resolver = async (
 
 export const signIn: Resolver = async (
 	_,
-	{ input }: { input: ISignInInput }
+	{ input }: { input: ISignInInput },
 ) => {
-	const user = await User.findOne({ username: input.username })
+	const user = await User.findOne({ email: input.email })
 
 	if (!user) {
-		return new AuthenticationError("Incorrect username or password")
+		return new AuthenticationError("Incorrect email or password")
 	}
 
 	if (!bcrypt.compareSync(input.password, user.password!)) {
-		return new AuthenticationError("Incorrect username or password")
+		return new AuthenticationError("Incorrect email or password")
 	}
 
 	const token = createToken({ sub: user._id })

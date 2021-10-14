@@ -1,25 +1,19 @@
 import { ResolverType } from "../types/gql"
+import auth from "../middlewares/auth"
 import * as authController from "../controllers/auth"
-import { FileUpload } from "graphql-upload"
-import { upload } from "../services/upload"
+import * as userController from "../controllers/user"
+import * as likeController from "../controllers/like"
+import * as chatController from "../controllers/chat" 
 
 const mutation: ResolverType = {
-	sign_up: authController.signUp,
-	sign_in: authController.signIn,
+	signUp: authController.signUp,
+	signIn: authController.signIn,
 
-	async upload(_, { file }: { file: Promise<FileUpload> }) {
-		const { createReadStream, filename, mimetype } = await file
-		const stream = createReadStream()
-		const url = await upload({
-			stream,
-			filename,
-			dirname: "images",
-			metadata: {
-				contentType: mimetype,
-			},
-		})
-		return url
-	},
+	getStart: auth(userController.update),
+
+	like: auth(likeController.likeUser),
+
+	sendChat: auth(chatController.sendChat)
 }
 
 export default mutation

@@ -6,7 +6,7 @@ import { execute, subscribe } from "graphql"
 import { SubscriptionServer } from "subscriptions-transport-ws"
 import { makeExecutableSchema } from "@graphql-tools/schema"
 import { PubSub } from "graphql-subscriptions"
-import { graphqlUploadExpress } from "graphql-upload"
+// import { graphqlUploadExpress } from "graphql-upload"
 
 import { PORT } from "./configs/env"
 import db from "./configs/mongo"
@@ -29,7 +29,6 @@ const startServer = async () => {
 	})
 
 	await server.start()
-	app.use(graphqlUploadExpress())
 	server.applyMiddleware({ app })
 
 	SubscriptionServer.create(
@@ -37,7 +36,7 @@ const startServer = async () => {
 			schema,
 			execute,
 			subscribe,
-			onConnect(params: any) {
+			onConnect(params: any, _: any) {
 				const authorization = params.Authorization
 				return { params, pubsub, authorization }
 			},

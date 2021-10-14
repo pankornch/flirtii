@@ -5,7 +5,7 @@ const User: Model<IUser> = model(
 	"users",
 	new Schema(
 		{
-			username: {
+			email: {
 				type: String,
 				required: true,
 				unique: true,
