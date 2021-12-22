@@ -26,17 +26,9 @@ const types = gql`
 
 	type Like {
 		_id: String!
-		users: [User]!
-		matched: Boolean!
-		likeUsers: [LikeUser]!
-		createdAt: Date!
-		updatedAt: Date!
-	}
-
-	type LikeUser {
-		_id: String!
 		source: User!
 		target: User!
+		matched: Boolean!
 		createdAt: Date!
 		updatedAt: Date!
 	}
@@ -44,8 +36,9 @@ const types = gql`
 	type Chat {
 		_id: String!
 		messages: [Message]!
-		message: Message
+		lastMessage: Message
 		users: [User]!
+		friend: User
 		createdAt: Date!
 		updatedAt: Date!
 	}
@@ -58,11 +51,6 @@ const types = gql`
 		updatedAt: Date!
 	}
 
-	type UserChat {
-		recipient: User!
-		chat: Chat
-	}
-
 	type AuthResponse {
 		token: String!
 		user: User!
@@ -72,6 +60,17 @@ const types = gql`
 		filename: String!
 		mimetype: String!
 		encoding: String!
+	}
+
+	type Match {
+		target: User!
+		createdAt: Date!
+	}
+
+	enum LikeTypes {
+		ALL
+		LIKERS
+		LIKES
 	}
 `
 

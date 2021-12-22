@@ -4,7 +4,8 @@ import { Chat, User } from "../models"
 import { Resolver } from "../types/gql"
 import { IChat } from "types/models"
 
-export const sendChat: Resolver = async (_, { input }, { user }) => {
+export const sendChat: Resolver = async (_, { input }, context) => {
+	const { user } = context
 	try {
 		const existUser = await User.findById(input.recipient)
 
@@ -30,15 +31,16 @@ export const sendChat: Resolver = async (_, { input }, { user }) => {
 			chat = existChat
 		}
 
-		await Message.create({
+		const message = await Message.create({
 			chat: chat._id,
 			user: user!._id,
 			text: input.text,
 		})
 
-		// context.pubsub.publish(`${input.recipient}:CHATS`, {
-		// 	chats: await getChats(null, null, context, null),
-		// })
+
+		context.pubsub.publish(`${input.recipient}:NEW_MESSAGE`, {
+			newMessage: message,
+		})
 
 		return chat
 	} catch (error) {
@@ -62,7 +64,7 @@ export const getChats: Resolver = async (_, __, { user }) => {
 
 export const getChatById: Resolver = async (_, { input }, { user }) => {
 	const chat = await Chat.findOne({
-		$and: [{ sender: user!._id }, { _id: input.id }],
+		$and: [{ users: { $in: [user!._id as string] } }, { _id: input.id }],
 	})
 
 	if (!chat) {

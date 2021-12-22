@@ -2,6 +2,7 @@ import auth from "../middlewares/auth"
 import { ResolverType } from "../types/gql"
 import * as userController from "../controllers/user"
 import * as chatController from "../controllers/chat"
+import * as likeController from "../controllers/like"
 
 const query: ResolverType = {
 	hello: () => "Hello",
@@ -10,6 +11,7 @@ const query: ResolverType = {
 	user: userController.getUserById,
 	chats: auth(chatController.getChats),
 	chat: auth(chatController.getChatById),
+	likes: auth(likeController.getUserLikes),
 }
 
 export default query

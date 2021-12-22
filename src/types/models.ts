@@ -18,7 +18,8 @@ export interface IUser {
 
 export interface ILike {
 	_id?: string
-	users?: IUser[] | string[]
+	source?: string | IUser
+	target?: string | IUser
 	matched?: Boolean
 	createdAt?: Date
 	updatedAt?: Date

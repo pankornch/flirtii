@@ -7,7 +7,6 @@ import {
 	userResolver,
 	messageResolver,
 	likeResolver,
-	likeUserResolver,
 } from "./typeResolvers"
 
 const resolvers = {
@@ -20,7 +19,6 @@ const resolvers = {
 	Like: likeResolver,
 	Chat: chatResolver,
 	Message: messageResolver,
-	LikeUser: likeUserResolver,
 }
 
 export default resolvers

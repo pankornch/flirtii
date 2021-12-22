@@ -1,26 +1,29 @@
 import { ResolverType } from "../../types/gql"
 
 import DataLoader from "dataloader"
-import { LikeUser } from "../../models"
+import { ILike } from "../../types/models"
+import { userLoader } from "../../services/dataLoaders"
 
-const likeLoader = new DataLoader<string, any>(async (keys) => {
-	const likes = await LikeUser.aggregate([
-		{
-			$match: {
-				like: {
-					$in: keys,
-				},
-			},
-		},
-	])
+// const likeLoader = new DataLoader<string, any>(async (keys) => {
+// 	const likes = await LikeUser.aggregate([
+// 		{
+// 			$match: {
+// 				like: {
+// 					$in: keys,
+// 				},
+// 			},
+// 		},
+// 	])
 
-	return keys.map((key) => likes.filter((e) => e.like.equals(key)))
-})
+// 	return keys.map((key) => likes.filter((e) => e.like.equals(key)))
+// })
 
-const likeResolver: ResolverType = {
-	likeUsers: (parent) => {
-		return likeLoader.load(parent._id)
+const likeResolver: ResolverType<ILike> = {
+	source(parent) {
+		return userLoader.load(parent.source as string)
+	},
+	target(parent) {
+		return userLoader.load(parent.target as string)
 	},
 }
-
 export default likeResolver

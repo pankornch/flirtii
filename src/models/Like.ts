@@ -5,13 +5,16 @@ const Like = model<ILike>(
 	"likes",
 	new Schema(
 		{
-			users: [
-				{
-					type: Types.ObjectId,
-					ref: "users",
-					required: true,
-				},
-			],
+			source: {
+				type: Types.ObjectId,
+				required: true,
+				ref: "users",
+			},
+			target: {
+				type: Types.ObjectId,
+				required: true,
+				ref: "users",
+			},
 			matched: {
 				type: Boolean,
 				default: () => false,

@@ -9,6 +9,7 @@ const query = gql`
 		users: [User]!
 		chats: [Chat]!
 		chat(input: GetChatInput!): Chat!
+		likes(type: LikeTypes!): [Like]!
 	}
 `
 export default query
